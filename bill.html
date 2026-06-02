@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bill</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+body{
+margin:0;
+padding:20px;
+font-family:Arial,sans-serif;
+background:#e2e8f0;
+}
+
+.bill{
+max-width:700px;
+margin:auto;
+background:#fff;
+border-radius:30px;
+overflow:hidden;
+box-shadow:0 20px 50px rgba(0,0,0,.25);
+animation:pop .8s ease;
+}
+
+.header{
+background:linear-gradient(135deg,#2563eb,#7c3aed);
+padding:40px;
+color:white;
+text-align:center;
+}
+
+.icon{
+font-size:70px;
+animation:bounce 2s infinite;
+}
+
+.header h1{
+margin:10px 0;
+}
+
+.content{
+padding:25px;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+margin:15px 0;
+}
+
+.details{
+background:#f8fafc;
+padding:20px;
+border-radius:15px;
+margin-top:15px;
+}
+
+.amount{
+margin-top:20px;
+padding:25px;
+border-radius:20px;
+background:linear-gradient(135deg,#dcfce7,#bbf7d0);
+text-align:center;
+font-size:38px;
+font-weight:bold;
+animation:glow 2s infinite;
+}
+
+.sign{
+display:flex;
+justify-content:space-between;
+margin-top:60px;
+}
+
+.sign div{
+width:45%;
+text-align:center;
+border-top:2px solid #999;
+padding-top:10px;
+}
+
+.btn{
+max-width:700px;
+margin:20px auto;
+}
+
+button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:15px;
+background:#16a34a;
+color:white;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+
+@keyframes pop{
+from{
+opacity:0;
+transform:scale(.8);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+@keyframes bounce{
+0%,100%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-12px);
+}
+}
+
+@keyframes glow{
+50%{
+transform:scale(1.03);
+}
+}
+</style>
+</head>
+<body>
+
+<div class="bill" id="bill">
+
+<div class="header">
+<div class="icon">💰</div>
+<h1>CASH PAYMENT VOUCHER</h1>
+<p id="society"></p>
+</div>
+
+<div class="content">
+
+<div class="row">
+<b>Date</b>
+<span id="date"></span>
+</div>
+
+<div class="row">
+<b>Expense</b>
+<span id="expense"></span>
+</div>
+
+<div class="details">
+<b>Expense Details</b>
+<br><br>
+<span id="details"></span>
+</div>
+
+<div class="amount">
+₹ <span id="amount"></span>
+</div>
+
+<div style="margin-top:20px">
+<b>Payee:</b>
+<span id="payee"></span>
+</div>
+
+<div class="sign">
+<div>
+<span id="payee2"></span><br>
+Payee Signature
+</div>
+
+<div>
+<span id="approved"></span><br>
+Approved By
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="btn">
+<button onclick="downloadBill()">
+📥 Download Bill Image
+</button>
+</div>
+
+<script>
+
+document.getElementById("society").innerText=localStorage.getItem("society");
+document.getElementById("date").innerText=localStorage.getItem("date");
+document.getElementById("expense").innerText=localStorage.getItem("expense");
+document.getElementById("details").innerText=localStorage.getItem("details");
+document.getElementById("amount").innerText=localStorage.getItem("amount");
+document.getElementById("payee").innerText=localStorage.getItem("payee");
+document.getElementById("payee2").innerText=localStorage.getItem("payee");
+document.getElementById("approved").innerText=localStorage.getItem("approved");
+
+function downloadBill(){
+
+html2canvas(document.getElementById("bill"),{
+scale:3,
+backgroundColor:"#ffffff"
+}).then(canvas=>{
+
+const a=document.createElement("a");
+a.href=canvas.toDataURL("image/png");
+a.download="PaymentVoucher.png";
+a.click();
+
+});
+
+}
+</script>
+
+</body>
+</html>
